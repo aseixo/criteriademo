@@ -166,25 +166,19 @@ public class CriteriaappApplicationTests {
 		CriteriaQuery<Tuple> criteria = builder.createTupleQuery();
 		Root<Corrupto> corruptoRoot = criteria.from(Corrupto.class);
 		criteria.select(builder.tuple(corruptoRoot.get("nome"), corruptoRoot.get("partido")));
-
 		TypedQuery<Tuple> qr = em.createQuery(criteria);
 		List<Tuple> lc = qr.getResultList();
 		for (Tuple t : lc) {
 			assertNotNull(t.get(0));
 		}
-		// assertNotNull(corruptoRoot);
 	}
 	
 	@Test
 	public void corruptoSelectTest() {
-		logger.info("corruptSelectTest");
-//		
-//		String hql = "from Corrupto c";
-//		Query query = em.createQuery(hql);
-//		for (Object c: query.getResultList()){
-//			logger.info(c.toString());
-//		}
-		
+		logger.info("corruptoSelectTest");
+		String hql = "from Corrupto c";
+		Query query = em.createQuery(hql);
+		logger.info(query.getResultList().toString());
 	}
 	@Test
 	public void connectionPoolTest() {
