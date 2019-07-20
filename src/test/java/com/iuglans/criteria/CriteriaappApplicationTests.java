@@ -183,8 +183,8 @@ public class CriteriaappApplicationTests {
 	@Test
 	public void connectionPoolTest() {
 		
-		HikariConfig config = new HikariConfig();
-		HikariDataSource ds;
+//		HikariConfig config = new HikariConfig();
+//		HikariDataSource ds;
 		
 		
 	}
