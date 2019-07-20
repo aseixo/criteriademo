@@ -2,6 +2,11 @@ package com.iuglans.criteria;
 
 import static org.junit.Assert.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.iuglans.criteria.model.Actividade;
@@ -180,11 +186,37 @@ public class CriteriaappApplicationTests {
 		Query query = em.createQuery(hql);
 		logger.info(query.getResultList().toString());
 	}
+	
 	@Test
 	public void connectionPoolTest() {
-		
+		logger.info("test para DataSource");
+
+		String url = "jdbc:mysql://localhost:3306/corrupciondb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+		String driver = "com.mysql.cj.jdbc.Driver";
+		String user = "arturo";
+		String pwd = "";
+		String sqlQuery = "select * from corruptos";
+		List<Corrupto> corruptos = new ArrayList<>();
 //		HikariConfig config = new HikariConfig();
 //		HikariDataSource ds;
+		DriverManagerDataSource ds = new DriverManagerDataSource();
+		ds.setDriverClassName(driver);
+		ds.setUrl(url);
+		ds.setUsername(user);
+		ds.setPassword(pwd);
+		assertNotNull(ds);
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement pst = con.prepareStatement(sqlQuery);
+			ResultSet rs = pst.executeQuery();
+			Corrupto c;
+			while (rs.next()) {
+				logger.info(rs.getString("nome") + " " + rs.getString("partido"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		
 		
 	}
