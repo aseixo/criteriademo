@@ -216,8 +216,5 @@ public class CriteriaappApplicationTests {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 }
