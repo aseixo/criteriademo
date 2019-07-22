@@ -1,16 +1,18 @@
 package com.iuglans.criteria;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
@@ -20,7 +22,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +36,6 @@ import com.iuglans.criteria.model.Actividade;
 import com.iuglans.criteria.model.Corrupto;
 import com.iuglans.repository.ActividadeRepository;
 import com.iuglans.repository.CorruptoRepository;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -46,10 +45,10 @@ public class CriteriaappApplicationTests {
 	EntityManager em;
 
 	@Autowired
-	CorruptoRepository corruptos;
+	private CorruptoRepository corruptos;
 	
-	@Autowired
-	ActividadeRepository actividade;
+	@Autowired (required= true)
+	private ActividadeRepository actividadeRepository;
 	
 	Logger logger = LoggerFactory.getLogger(CriteriaappApplicationTests.class);
 
@@ -109,31 +108,32 @@ public class CriteriaappApplicationTests {
 	}
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void insertionEntityTest() {
 
+		Long old = corruptos.count();
 		Corrupto c = new Corrupto();
-		c.setAsunto("xenofobia, odio, homofobia, fascismo, autoritarismo");
+		c.setAsunto("Xenofobia, misoxinia, homofobia");
 		c.setCondena(2L);
 		// c.setCorruptoId(3000L);
 		c.setNome("Andalucín");
 		c.setPartido("BOX");
-		long id = corruptos.insert(c);
-		assert (id > 0);
+		corruptos.save(c);
+		assert(corruptos.count() > old);
 	}
 
 	@Test
 	@Ignore
 	public void insertionCorruptoActividadesTest() {
 
+		Long old = corruptos.count();
 		Corrupto c = new Corrupto();
 		c.setAsunto("xenofobia, odio, homofobia, fascismo, autoritarismo");
 		c.setCondena(2L);
-		// c.setCorruptoId(3000L);
 		c.setNome("Andalucín");
 		c.setPartido("BOX");
-		long id = corruptos.insert(c);
-		assert (id > 0);
+		corruptos.save(c);
+		assert (corruptos.count() > old);
 	}
 
 	
@@ -154,7 +154,7 @@ public class CriteriaappApplicationTests {
 	@Ignore
 	public void findAllActividadesTest() {
 
-		List<Actividade> actividades = actividade.findAll();
+		List<Actividade> actividades = actividadeRepository.findAll();
 		assertNotNull(actividades);
 		assertTrue(actividades.size() > 0);
 		logger.info("findAllActividades");
@@ -180,6 +180,7 @@ public class CriteriaappApplicationTests {
 	}
 	
 	@Test
+	@Ignore
 	public void corruptoSelectTest() {
 		logger.info("corruptoSelectTest");
 		String hql = "from Corrupto c";
@@ -188,6 +189,7 @@ public class CriteriaappApplicationTests {
 	}
 	
 	@Test
+	@Ignore
 	public void connectionPoolTest() {
 		logger.info("test para DataSource");
 
@@ -216,5 +218,18 @@ public class CriteriaappApplicationTests {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	@Ignore
+	public void addCorrupto() {
+		
+		Long old = corruptos.count();
+		Optional<Actividade> a = actividadeRepository.findById(8L);
+		List<Actividade> acts = new ArrayList<>();
+		acts.add(a.get());
+		Corrupto c = new Corrupto(1L, "Candia", "BeBé", "suborno a deputado provincial", 0L, acts);
+		corruptos.save(c);
+		assert(corruptos.count() > old);
 	}
 }
