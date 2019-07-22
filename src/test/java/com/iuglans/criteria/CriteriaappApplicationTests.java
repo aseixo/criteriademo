@@ -108,7 +108,7 @@ public class CriteriaappApplicationTests {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void insertionEntityTest() {
 
 		Long old = corruptos.count();
@@ -221,15 +221,18 @@ public class CriteriaappApplicationTests {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void addCorrupto() {
 		
+		logger.info("add Corrupt info");
 		Long old = corruptos.count();
 		Optional<Actividade> a = actividadeRepository.findById(8L);
 		List<Actividade> acts = new ArrayList<>();
 		acts.add(a.get());
-		Corrupto c = new Corrupto(1L, "Candia", "BeBé", "suborno a deputado provincial", 0L, acts);
+		Corrupto c = new Corrupto(101L, "Candianinha", "BeBé", "suborno a deputado provincial", 0L, acts);
 		corruptos.save(c);
+		logger.info(c.toString());
 		assert(corruptos.count() > old);
+		logger.info("finishing add Corrupt");
 	}
 }
