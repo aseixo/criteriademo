@@ -4,3 +4,8 @@ para sincronizar con local
 
 =================================
 
+cambios en local
+para sincronizar en remoto
+
+---------------------------------
+
