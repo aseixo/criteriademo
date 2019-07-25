@@ -24,37 +24,37 @@ import com.iuglans.criteria.model.Actividade;
  * @author arturo
  *
  */
-@Repository
-@Transactional
-public class ActividadeRepositoryImpl implements ActividadeRepository{
+//@Repository
+//@Transactional
+public class ActividadeRepositoryImpl{
 	
 	private static Logger logger = LoggerFactory.getLogger(ActividadeRepository.class); 
 	@PersistenceContext
 	EntityManager em;
 
-	@Override
-	public long insert(Actividade a) {
-		logger.info("inserindo novo rexisto " + a.toString());
-		return 0;
-	}
-
-	@Override
-	public Optional<Actividade> find(long id) {
-		logger.info("a procurar rexisto por id = {}", id);
-
-		return null;
-	}
-
-	@Override
-	public List<Actividade> findAll() {
-		logger.info("a listar todos");
-		try {
-			Query acts = em.createNamedQuery("Actividade.todos", Actividade.class);
-			return acts.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+//	@Override
+//	public long insert(Actividade a) {
+//		logger.info("inserindo novo rexisto " + a.toString());
+//		return 0;
+//	}
+//
+//	@Override
+//	public Optional<Actividade> find(long id) {
+//		logger.info("a procurar rexisto por id = {}", id);
+//		Optional<Actividade> a = null;
+//		return a;
+//	}
+//
+//	@Override
+//	public List<Actividade> findAll() {
+//		logger.info("a listar todos");
+//		try {
+//			Query acts = em.createNamedQuery("Actividade.todos", Actividade.class);
+//			return acts.getResultList();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 
 }

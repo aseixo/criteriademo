@@ -37,6 +37,7 @@ public class Corrupto implements Serializable {
 	private Long condena;
 	@OneToMany(mappedBy = "corrupto", cascade = CascadeType.ALL)
 	private List<Actividade> actividades;
+	
 	public Corrupto() {
 	}
 
@@ -47,6 +48,18 @@ public class Corrupto implements Serializable {
 		this.partido = partido;
 		this.asunto = asunto;
 		this.condena = condena;
+	}
+
+	
+	public Corrupto(Long corruptoId, String nome, String partido, String asunto, Long condena,
+			List<Actividade> actividades) {
+		super();
+		this.corruptoId = corruptoId;
+		this.nome = nome;
+		this.partido = partido;
+		this.asunto = asunto;
+		this.condena = condena;
+		this.actividades = actividades;
 	}
 
 	public Long getCondena() {

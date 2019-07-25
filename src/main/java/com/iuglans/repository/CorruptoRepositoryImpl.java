@@ -16,32 +16,27 @@ import com.iuglans.loggerutils.LoggerMarker;
 
 @Repository
 @Transactional
-public class CorruptoRepositoryImpl implements CorruptoRepository {
+public class CorruptoRepositoryImpl {
 	
 	private static Logger logger = LoggerFactory.getLogger(CorruptoRepository.class); 
 	@PersistenceContext
 	EntityManager em;
 
-	@Override
 	public long insert(Corrupto c) {
-	
 		logger.info(/*LoggerMarker.persitanceMarker,*/ "A persistir información na BD");
 		em.persist(c);
 		//em.merge(c);
 		return c.getCorruptoId();
 	}
 
-	@Override
 	public Corrupto find(long id) {
 		logger.info("A pesquisar información na BD");
 		return em.find(Corrupto.class, id);
 	}
 
-	@Override
 	public List<Corrupto> findAll() {
 		logger.info("Lista completa de itens");
 		Query query = em.createNamedQuery("Corrupto.todosPorPartido", Corrupto.class);
 		return query.getResultList();
 	}
-
 }
