@@ -1,1 +1,6 @@
 dalmata
+cambios en remoto
+para sincronizar con local
+
+=================================
+
